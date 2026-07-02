@@ -240,22 +240,79 @@
 
         footer { text-align: center; padding: 40px; color: var(--fundo-pagina); background-color: var(--marrom-escuro); }
         /* --- CONFIGURAÇÃO PARA TELAS DE CELULAR --- */
+/* --- CONFIGURAÇÃO PARA TELAS DE CELULAR --- */
 @media (max-width: 768px) {
     
-    /* Botão com as 3 faixinhas fixo no canto superior direito */
+    /* 1. Botão com as 3 faixinhas dentro de um círculo vermelho */
     .menu-mobile-btn {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        width: 30px;
-        height: 25px;
-        background: transparent;
-        border: none;
+        align-items: center;
+        width: 45px; /* Tamanho do círculo */
+        height: 45px; /* Tamanho do círculo */
+        padding: 10px;
+        background-color: var(--vermelho-principal); /* Círculo vermelho */
+        border: 2px solid var(--marrom-escuro); /* Borda opaca combinando */
+        border-radius: 50%; /* Faz ficar perfeitamente redondo */
         cursor: pointer;
         position: fixed;
-        top: 20px;
-        right: 20px;
+        top: 15px;
+        right: 15px;
         z-index: 1000;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    /* Ajusta as 3 linhas para caberem bonitas dentro do círculo */
+    .menu-mobile-btn span {
+        width: 100%;
+        height: 3px;
+        background-color: #d9b44a; /* Mantém amarelo */
+        border-radius: 2px;
+        transition: 0.3s;
+    }
+
+    /* 2. O Header agora começa aparecendo normal e vai sumir ao rolar */
+    header {
+        position: fixed; /* Fixado no topo */
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: var(--vermelho-principal);
+        padding: 15px 20px;
+        text-align: center;
+        z-index: 998;
+        transition: transform 0.3s ease; /* Efeito suave para sumir subindo */
+    }
+
+    /* Classe que o JavaScript vai injetar para ESCONDER a faixa ao rolar para baixo */
+    header.escondido {
+        transform: translateY(-100%);
+    }
+
+    /* 3. TRANSFORMAÇÃO: Agora as OPÇÕES CLICÁVEIS viram o menu que desliza */
+    header nav, header div { 
+        position: fixed;
+        top: 0;
+        left: -100%; /* Escondido na esquerda */
+        width: 75%;
+        height: 100vh;
+        background-color: var(--marrom-escuro); /* Uma cor diferente para destacar as opções */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+        transition: 0.4s ease;
+        z-index: 999;
+        box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+    }
+
+    /* Quando clicar nas 3 faixinhas, o painel de opções aparece */
+    header nav.active, header div.active {
+        left: 0;
+    }
+}
     }
 
     /* As 3 linhas do botão (usando a cor amarela do seu título) */
@@ -541,10 +598,34 @@
         }
     </script>
 <script>
+// 1. Abre e fecha as opções ao clicar no botão das 3 faixinhas
 function toggleMenu() {
-    const menu = document.querySelector('header');
-    menu.classList.toggle('active');
+    // Procura o container onde ficam seus links (mude para 'div' se não usou 'nav')
+    const opcoes = document.querySelector('header nav') || document.querySelector('header div');
+    opcoes.classList.toggle('active');
 }
+
+// 2. Detecta a rolagem para sumir com a faixa vermelha
+let ultimaRolagem = 0;
+window.addEventListener('scroll', () => {
+    const header = document.querySelector('header');
+    const rolagemAtual = window.pageYOffset;
+
+    if (rolagemAtual <= 0) {
+        header.classList.remove('escondido');
+        return;
+    }
+    
+    // Se rolou para baixo, esconde a faixa. Se rolou para cima, mostra de novo.
+    if (rolagemAtual > ultimaRolagem && !header.classList.contains('escondido')) {
+        header.classList.add('escondido');
+    } else if (rolagemAtual < ultimaRolagem && header.classList.contains('escondido')) {
+        header.classList.remove('escondido');
+    }
+    
+    ultimaRolagem = rolagemAtual;
+});
+</script>
 </script>
 </body>
 </html>
