@@ -272,24 +272,27 @@
         transition: 0.3s;
     }
 
-    /* 2. O Header agora começa aparecendo normal e vai sumir ao rolar */
     header {
-        position: fixed; /* Fixado no topo */
-        top: 0;
-        left: 0;
-        width: 100%;
-        background-color: var(--vermelho-principal);
-        padding: 15px 20px;
-        text-align: center;
-        z-index: 998;
-        transition: transform 0.3s ease; /* Efeito suave para sumir subindo */
-    }
-
+    position: fixed; /* Fixado no topo */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px; /* Define uma altura clara para a faixa aparecer */
+    background-color: var(--vermelho-principal);
+    display: flex;
+    justify-content: center; /* Centraliza o título de lado a lado */
+    align-items: center; /* Centraliza o título de cima a baixo */
+    border-bottom: 4px solid var(--marrom-escuro); /* Bordinha estilosa */
+    z-index: 998; /* Fica abaixo do botão, mas acima dos cards */
+    transition: transform 0.3s ease; /* Efeito suave para sumir subindo */
+}
     /* Classe que o JavaScript vai injetar para ESCONDER a faixa ao rolar para baixo */
     header.escondido {
         transform: translateY(-100%);
     }
-
+body {
+    padding-top: 80px; /* Dá o espaço necessário para a barra vermelha não cobrir o conteúdo */
+}
     /* 3. TRANSFORMAÇÃO: Agora as OPÇÕES CLICÁVEIS viram o menu que desliza */
     header nav, header div { 
         position: fixed;
