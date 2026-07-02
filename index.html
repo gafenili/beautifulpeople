@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beautiful People</title>
-    <!-- Importando fontes autênticas estilo anos 60/70 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap" rel="stylesheet">
@@ -30,7 +29,7 @@
         
         a { color: inherit; text-decoration: none; }
         
-        /* Cabeçalho */
+        /* Cabeçalho padrão (Computador) */
         header { 
             background-color: var(--vermelho-principal); 
             padding: 40px 20px; 
@@ -132,7 +131,7 @@
         }
         
         #beautiful-sepulcro h2 {
-            color: #666053;            /* Cinza desbotado puxando para o tom do papel */
+            color: #666053;            
             border-bottom: 3px dashed #333;
             text-shadow: none;
         }
@@ -239,139 +238,134 @@
         }
 
         footer { text-align: center; padding: 40px; color: var(--fundo-pagina); background-color: var(--marrom-escuro); }
-        /* --- CONFIGURAÇÃO PARA TELAS DE CELULAR --- */
-/* --- CONFIGURAÇÃO PARA TELAS DE CELULAR --- */
-@media (max-width: 768px) {
-    
-    /* 1. Botão com as 3 faixinhas dentro de um círculo vermelho */
-    .menu-mobile-btn {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-        width: 45px; /* Tamanho do círculo */
-        height: 45px; /* Tamanho do círculo */
-        padding: 10px;
-        background-color: var(--vermelho-principal); /* Círculo vermelho */
-        border: 2px solid var(--marrom-escuro); /* Borda opaca combinando */
-        border-radius: 50%; /* Faz ficar perfeitamente redondo */
-        cursor: pointer;
-        position: fixed;
-        top: 15px;
-        right: 15px;
-        z-index: 1000;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    }
 
-    /* Ajusta as 3 linhas para caberem bonitas dentro do círculo */
-    .menu-mobile-btn span {
-        width: 100%;
-        height: 3px;
-        background-color: #d9b44a; /* Mantém amarelo */
-        border-radius: 2px;
-        transition: 0.3s;
-    }
+        /* --- CONFIGURAÇÃO EXCLUSIVA PARA TELAS DE CELULAR --- */
+        @media (max-width: 768px) {
+            
+            body {
+                padding-top: 80px; /* Dá espaço para a barra do topo não cobrir os cards */
+            }
 
-    header {
-    position: fixed; /* Fixado no topo */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 60px; /* Define uma altura clara para a faixa aparecer */
-    background-color: var(--vermelho-principal);
-    display: flex;
-    justify-content: center; /* Centraliza o título de lado a lado */
-    align-items: center; /* Centraliza o título de cima a baixo */
-    border-bottom: 4px solid var(--marrom-escuro); /* Bordinha estilosa */
-    z-index: 998; /* Fica abaixo do botão, mas acima dos cards */
-    transition: transform 0.3s ease; /* Efeito suave para sumir subindo */
-}
-    /* Classe que o JavaScript vai injetar para ESCONDER a faixa ao rolar para baixo */
-    header.escondido {
-        transform: translateY(-100%);
-    }
-body {
-    padding-top: 80px; /* Dá o espaço necessário para a barra vermelha não cobrir o conteúdo */
-}
-    /* 3. TRANSFORMAÇÃO: Agora as OPÇÕES CLICÁVEIS viram o menu que desliza */
-    header nav, header div { 
-        position: fixed;
-        top: 0;
-        left: -100%; /* Escondido na esquerda */
-        width: 75%;
-        height: 100vh;
-        background-color: var(--marrom-escuro); /* Uma cor diferente para destacar as opções */
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 25px;
-        transition: 0.4s ease;
-        z-index: 999;
-        box-shadow: 5px 0 15px rgba(0,0,0,0.5);
-    }
+            /* 1. Barra vermelha limpa no topo */
+            header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 60px;
+                padding: 0 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-bottom: 4px solid var(--marrom-escuro);
+                z-index: 998;
+                transition: transform 0.3s ease;
+            }
 
-    /* Quando clicar nas 3 faixinhas, o painel de opções aparece */
-    header nav.active, header div.active {
-        left: 0;
-    }
-}
-    }
+            header h1 {
+                font-size: 2.2rem;
+                margin-bottom: 0;
+                text-shadow: 2px 2px 0px var(--marrom-escuro);
+            }
 
-    /* As 3 linhas do botão (usando a cor amarela do seu título) */
-    .menu-mobile-btn span {
-        width: 100%;
-        height: 3px;
-        background-color: #d9b44a;
-        border-radius: 2px;
-        transition: 0.3s;
-    }
+            /* Esconde a lista de links original da barra do topo no mobile */
+            header nav ul {
+                display: none;
+            }
 
-    /* Esconde o header original e transforma num menu lateral que desliza */
-    header {
-        position: fixed;
-        top: 0;
-        left: -100%;
-        width: 75%;
-        height: 100vh;
-        background-color: var(--vermelho-principal);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        transition: 0.4s ease;
-        z-index: 999;
-        box-shadow: 5px 0 15px rgba(0,0,0,0.5);
-    }
+            /* 2. Classe para esconder a barra ao rolar a página para baixo */
+            header.escondido {
+                transform: translateY(-100%);
+            }
 
-    /* Quando clicar no botão, essa classe entra em ação e mostra o menu */
-    header.active {
-        left: 0;
-    }
+            /* 3. Botão redondo vermelho com as 3 faixinhas amarelas */
+            .menu-mobile-btn {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                align-items: center;
+                width: 45px;
+                height: 45px;
+                padding: 10px;
+                background-color: var(--vermelho-principal);
+                border: 2px solid var(--marrom-escuro);
+                border-radius: 50%;
+                cursor: pointer;
+                position: fixed;
+                top: 8px;
+                right: 15px;
+                z-index: 1000;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            }
 
-    /* Garante que os links fiquem um embaixo do outro no celular */
-    header nav, header div {
-        display: flex;
-        flex-direction: column;
-        gap: 25px;
-        text-align: center;
-    }
-}
+            .menu-mobile-btn span {
+                width: 100%;
+                height: 3px;
+                background-color: #d9b44a;
+                border-radius: 2px;
+                transition: 0.3s;
+            }
 
-/* Esconde as 3 faixinhas se abrir no computador */
-@media (min-width: 769px) {
-    .menu-mobile-btn {
-        display: none;
-    }
-}
+            /* 4. O Menu lateral oculto que vai deslizar quando clicado */
+            .menu-lateral-mobile {
+                position: fixed;
+                top: 0;
+                left: -100%; /* Escondido na esquerda */
+                width: 75%;
+                height: 100vh;
+                background-color: var(--marrom-escuro);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 25px;
+                transition: 0.4s ease;
+                z-index: 999;
+                box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+                padding: 20px;
+            }
+
+            /* Quando o menu ganha a classe active, ele entra na tela */
+            .menu-lateral-mobile.active {
+                left: 0;
+            }
+
+            .menu-lateral-mobile a {
+                font-size: 1.8rem;
+                color: var(--creme-fosco);
+                text-decoration: none;
+                display: block;
+                margin: 15px 0;
+            }
+            
+            .menu-lateral-mobile a:hover {
+                color: var(--fundo-pagina);
+            }
+        }
+
+        /* Configuração para Computador (Esconde o que é do celular) */
+        @media (min-width: 769px) {
+            .menu-mobile-btn, .menu-lateral-mobile {
+                display: none;
+            }
+        }
     </style>
-    <button class="menu-mobile-btn" onclick="toggleMenu()">
-    <span></span>
-    <span></span>
-    <span></span>
-</button>
 </head>
 <body>
+
+    <button class="menu-mobile-btn" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="menu-lateral-mobile" id="menuLateral">
+        <a href="#quem-somos" onclick="toggleMenu()">Quem Somos</a>
+        <a href="#galeria" onclick="toggleMenu()">Galeria</a>
+        <a href="#musicas" onclick="toggleMenu()">Trilha Sonora</a>
+        <a href="#beautiful-sepulcro" onclick="toggleMenu()">Beautiful Sepulcro</a>
+        <a href="#quiz" onclick="toggleMenu()">O Quiz</a>
+    </div>
 
     <header>
         <h1>Beautiful People</h1>
@@ -386,198 +380,139 @@ body {
         </nav>
     </header>
 
-  <!-- QUEM SOMOS -->
     <section id="quem-somos">
         <h2>Os Beauty's</h2>
         <div class="amigos-grid">
-            
-            <!-- Card 1: Fenili -->
             <div class="amigo-card">
                 <img src="fenili.jfif" alt="Foto">
                 <h3>João Fenili</h3>
                 <p>O beatle perdido do grupo.</p>
             </div>
-
-            <!-- Card 2: Super Jô -->
             <div class="amigo-card">
                 <img src="jo.jfif" alt="Foto">
                 <h3>Super Jô</h3>
                 <p>O filho do fenili na sinuca.</p>
             </div>
-
-            <!-- Card 3: Próximo Amigo -->
             <div class="amigo-card">
                 <img src="araujo.jfif" alt="Foto">
                 <h3>Gabriel Araujo</h3>
                 <p>Uma arma perigosa que pode entrar em ação!</p>
             </div>
-
-            <!-- Card 4: Próximo Amigo -->
             <div class="amigo-card">
                 <img src="maju.jfif" alt="Foto">
                 <h3>Maria Julia</h3>
                 <p>Um coração nobre engrandece a menor das mulheres.</p>
             </div>
-
-            <!-- Card 5: Próximo Amigo -->
             <div class="amigo-card">
                 <img src="piovesan.jfif" alt="Foto">
                 <h3>Guilherme Piovesan</h3>
                 <p>Este site envolve sexo?</p>
-          </div>
-
-            <!-- Card 6: Próximo Amigo -->
+            </div>
             <div class="amigo-card">
                 <img src="tali.jfif" alt="Foto">
                 <h3>Taliany</h3>
                 <p>Vai ter mosquito nesse site?</p>
             </div>
-
-            <!-- Card 7: Próximo Amigo -->
             <div class="amigo-card">
                 <img src="edi.jfif" alt="Foto">
                 <h3>Edi Dorneles</h3>
                 <p>O marido de aluguel da beauty.</p>
             </div>
-
         </div>
     </section>
 
-  <!-- GALERIA -->
     <section id="galeria">
         <h2>Registros & Rolês</h2>
-        
-        <!-- Álbum 1 -->
         <div class="sessao-galeria">
             <h3>Álbum 1: Ah, a Carimã</h3>
             <div class="fotos-grid">
-                <!-- Substitua pelos nomes reais dos seus arquivos de imagem -->
                 <img src="carima1.jfif" alt="Registro do Rolê">
                 <img src="carima2.jfif" alt="Registro do Rolê">
                 <img src="carima3.jfif" alt="Registro do Rolê">
             </div>
         </div>
-
-        <!-- Álbum 2 (Caso queira separar por evento/época) -->
         <div class="sessao-galeria">
             <h3>Álbum 2: Aquele do aniversario da Guilherme</h3>
             <div class="fotos-grid">
                 <img src="nivergui1.jfif" alt="Registro do Rolê">
                 <img src="nivergui2.jfif" alt="Registro do Rolê">
-              <figure style="margin: 0; padding: 0; text-align: center;">
-    <img src="nivergui3.jfif" alt="Registro do Rolê" style="margin-bottom: 5px;">
-    <figcaption style="font-size: 1.1rem; color: var(--marrom-escuro); font-style: italic; line-height: 1.2;">
-        Coloquei essa pra vocês soltarem  aquele arzinho pelo nariz.
-    </figcaption>
-</figure>
+                <figure style="margin: 0; padding: 0; text-align: center;">
+                    <img src="nivergui3.jfif" alt="Registro do Rolê" style="margin-bottom: 5px;">
+                    <figcaption style="font-size: 1.1rem; color: var(--marrom-escuro); font-style: italic; line-height: 1.2;">
+                        Coloquei essa pra vocês soltarem aquele arzinho pelo nariz.
+                    </figcaption>
+                </figure>
             </div>
         </div>
     </section>
 
-   <!-- MÚSICAS -->
     <section id="musicas">
         <h2>Fitas de Rolo & Trilhas</h2>
         <div class="musicas-list">
-            
-            <!-- Música 1 -->
             <div class="musica-item">
                 <div class="musica-info">
-                    <!-- https://open.spotify.com/intl-pt/track/6Zv4HVHfadVo3JQSSbwY7r?si=6b8c918cd7274de4 <a> -->
-                    <h4>
-                        <a href="https://open.spotify.com/intl-pt/track/6Zv4HVHfadVo3JQSSbwY7r?si=6b8c918cd7274de4" target="_blank" style="text-decoration: underline;">
-                            Sentimental
-                        </a>
-                    </h4>
+                    <h4><a href="https://open.spotify.com/intl-pt/track/6Zv4HVHfadVo3JQSSbwY7r?si=6b8c918cd7274de4" target="_blank" style="text-decoration: underline;">Sentimental</a></h4>
                     <p>Los Hermanos / Bloco Do Eu Sozinho</p>
                 </div>
                 <span style="color: var(--vermelho-principal);">Um clássico do karaoke!</span>
             </div>
-
-            <!-- Música 2 -->
             <div class="musica-item">
                 <div class="musica-info">
-                    <h4>
-                        <a href="https://open.spotify.com/intl-pt/track/2yeI0FRWd1sqGpHEUc5DFm?si=85a5c2fdc0964851" target="_blank" style="text-decoration: underline;">
-                            Depois
-                        </a>
-                    </h4>
+                    <h4><a href="https://open.spotify.com/intl-pt/track/2yeI0FRWd1sqGpHEUc5DFm?si=85a5c2fdc0964851" target="_blank" style="text-decoration: underline;">Depois</a></h4>
                     <p>Marisa Monte / O Que Você Quer Saber De Verdade</p>
                 </div>
                 <span style="color: var(--vermelho-principal);">A marcha fúnebre.</span>
             </div>
-
-            <!-- Música 3 -->
             <div class="musica-item">
                 <div class="musica-info">
-                    <h4>
-                        <a href="https://open.spotify.com/intl-pt/track/0KZodeWxqxd88F9wY1cqgs?si=85a50991f53848a0" target="_blank" style="text-decoration: underline;">
-                           My Sweet Lord
-                        </a>
-                    </h4>
+                    <h4><a href="https://open.spotify.com/intl-pt/track/0KZodeWxqxd88F9wY1cqgs?si=85a50991f53848a0" target="_blank" style="text-decoration: underline;">My Sweet Lord</a></h4>
                     <p>George Harrison / All Things Must Pass</p>
                 </div>
                 <span style="color: var(--vermelho-principal);">Essa foi só porque eu gosto e eu que criei o site porra</span>
             </div>
-
         </div>
     </section>
 
-    <!-- BEAUTIFUL SEPULCRO -->
     <section id="beautiful-sepulcro">
         <h2>Beautiful Sepulcro 💀</h2>
-        <p class="sepulcro-aviso">
-            Em memória daqueles que estão fracos na fé ou se perderam pelo caminho...
-        </p>
-
+        <p class="sepulcro-aviso">In memória daqueles que estão fracos na fé ou se perderam pelo caminho...</p>
         <div class="ex-amigos-grid">
-            
-            <!-- Card Ex-Amigo 1 -->
             <div class="ex-amigo-card">
-                <!-- Substitua pelo nome exato do arquivo da foto (ex: fulano.jfif) -->
                 <img src="pietra.jfif" alt="Retrato de Luto">
                 <h3>Pietra Groto</h3>
                 <div class="data-obito">Desaparecido desde: Jun/2026</div>
                 <p>Sumiu do mapa após sair de moto com algum desconhecido. Pessoas relatam a ter avistado pelo sul do pais, a moto ainda estava sob uma roda.</p>
             </div>
-
-            <!-- Card Ex-Amigo 2 -->
             <div class="ex-amigo-card">
-                <!-- Substitua pelo nome exato do arquivo da foto (ex: ciclano.jfif) -->
                 <img src="raphael.jfif" alt="Retrato de Luto">
                 <h3>Raphael</h3>
                 <div class="data-obito">Desaparecido desde: Mai/2026</div>
                 <p>Disse que ia comer um Daddy's Burguer e nunca mais voltou, reza a lenda que ele só conseguiu comer 90% do lanche e sumiu de vergonha.</p>
             </div>
-
         </div>
     </section>
 
-    <!-- QUIZ -->
     <section id="quiz">
         <h2 style="margin-top: 40px;">Quem Sabe Mais? (O Quiz)</h2>
         <div class="quiz-container">
-            
             <div class="pergunta" id="p1">
                 <p>1. Qual o mais provável de furar um rolê por ter mosquitos la?</p>
                 <div class="opcoes-btn">
-                    <button class="quiz-btn" onclick="responder('p1', false)">O piopio </button>
+                    <button class="quiz-btn" onclick="responder('p1', false)">O piopio</button>
                     <button class="quiz-btn" onclick="responder('p1', true)">A Tali</button>
                     <button class="quiz-btn" onclick="responder('p1', false)">O jamalzinho</button>
                 </div>
                 <div class="feedback"></div>
             </div>
-
             <div class="pergunta" id="p2">
                 <p>2. Na fase boa, quem comeria mais num self service?</p>
                 <div class="opcoes-btn">
-                    <button class="quiz-btn" onclick="responder('p2', true)">Araujo Prime </button>
+                    <button class="quiz-btn" onclick="responder('p2', true)">Araujo Prime</button>
                     <button class="quiz-btn" onclick="responder('p2', false)">O Jamal Prime</button>
                     <button class="quiz-btn" onclick="responder('p2', false)">O Fenili Prime</button>
-
                 </div>
                 <div class="feedback"></div>
             </div>
-
         </div>
     </section>
 
@@ -585,11 +520,11 @@ body {
         <p>Beautiful People — 2026</p>
     </footer>
 
-    <script>
+    <script strain="javascript">
+        // Função do Quiz
         function responder(idPergunta, deucerto) {
             const perguntaDiv = document.getElementById(idPergunta);
             const feedbackDiv = perguntaDiv.querySelector('.feedback');
-            
             if(deucerto) {
                 feedbackDiv.innerHTML = "🎯 Na mosca! História real.";
                 feedbackDiv.style.color = "#21130b";
@@ -599,36 +534,30 @@ body {
             }
             feedbackDiv.style.display = "block";
         }
+
+        // 1. Abre e fecha o menu deslizante lateral no mobile
+        function toggleMenu() {
+            const menu = document.getElementById('menuLateral');
+            menu.classList.toggle('active');
+        }
+
+        // 2. Controla o Header para sumir ao rolar para baixo e reaparecer ao subir
+        let ultimaRolagem = 0;
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            const rolagemAtual = window.pageYOffset;
+
+            if (rolagemAtual <= 0) {
+                header.classList.remove('escondido');
+                return;
+            }
+            if (rolagemAtual > ultimaRolagem && !header.classList.contains('escondido')) {
+                header.classList.add('escondido');
+            } else if (rolagemAtual < ultimaRolagem && header.classList.contains('escondido')) {
+                header.classList.remove('escondido');
+            }
+            ultimaRolagem = rolagemAtual;
+        });
     </script>
-<script>
-// 1. Abre e fecha as opções ao clicar no botão das 3 faixinhas
-function toggleMenu() {
-    // Procura o container onde ficam seus links (mude para 'div' se não usou 'nav')
-    const opcoes = document.querySelector('header nav') || document.querySelector('header div');
-    opcoes.classList.toggle('active');
-}
-
-// 2. Detecta a rolagem para sumir com a faixa vermelha
-let ultimaRolagem = 0;
-window.addEventListener('scroll', () => {
-    const header = document.querySelector('header');
-    const rolagemAtual = window.pageYOffset;
-
-    if (rolagemAtual <= 0) {
-        header.classList.remove('escondido');
-        return;
-    }
-    
-    // Se rolou para baixo, esconde a faixa. Se rolou para cima, mostra de novo.
-    if (rolagemAtual > ultimaRolagem && !header.classList.contains('escondido')) {
-        header.classList.add('escondido');
-    } else if (rolagemAtual < ultimaRolagem && header.classList.contains('escondido')) {
-        header.classList.remove('escondido');
-    }
-    
-    ultimaRolagem = rolagemAtual;
-});
-</script>
-</script>
 </body>
 </html>
