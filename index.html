@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beautiful People</title>
+    <!-- Importando fontes autênticas estilo anos 60/70 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap" rel="stylesheet">
@@ -76,7 +77,7 @@
             position: relative;
         }
 
-        /* Quem Somos */
+        /* Quem Somos / Grades de Cards */
         .amigos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; }
         
         .amigo-card { 
@@ -191,7 +192,7 @@
             color: #5c574e;
         }
 
-        /* Quiz */
+        /* Quiz / Containers de Formulário */
         .quiz-container {
             background-color: var(--creme-fosco);
             border: 3px solid var(--marrom-escuro);
@@ -243,10 +244,10 @@
         @media (max-width: 768px) {
             
             body {
-                padding-top: 80px; /* Dá espaço para a barra do topo não cobrir os cards */
+                padding-top: 80px;
             }
 
-            /* 1. Barra vermelha limpa no topo */
+            /* Barra vermelha limpa no topo */
             header {
                 position: fixed;
                 top: 0;
@@ -268,17 +269,17 @@
                 text-shadow: 2px 2px 0px var(--marrom-escuro);
             }
 
-            /* Esconde a lista de links original da barra do topo no mobile */
-            header nav ul {
+            /* Esconde a lista original da barra no mobile */
+            header nav {
                 display: none;
             }
 
-            /* 2. Classe para esconder a barra ao rolar a página para baixo */
+            /* Esconde a barra ao rolar a página para baixo */
             header.escondido {
                 transform: translateY(-100%);
             }
 
-            /* 3. Botão redondo vermelho com as 3 faixinhas amarelas */
+            /* Botão redondo de 3 faixinhas */
             .menu-mobile-btn {
                 display: flex;
                 flex-direction: column;
@@ -306,11 +307,11 @@
                 transition: 0.3s;
             }
 
-            /* 4. O Menu lateral oculto que vai deslizar quando clicado */
+            /* Menu lateral oculto */
             .menu-lateral-mobile {
                 position: fixed;
                 top: 0;
-                left: -100%; /* Escondido na esquerda */
+                left: -100%;
                 width: 75%;
                 height: 100vh;
                 background-color: var(--marrom-escuro);
@@ -325,7 +326,6 @@
                 padding: 20px;
             }
 
-            /* Quando o menu ganha a classe active, ele entra na tela */
             .menu-lateral-mobile.active {
                 left: 0;
             }
@@ -353,20 +353,25 @@
 </head>
 <body>
 
+    <!-- Botão de três faixinhas (Apenas para celular) -->
     <button class="menu-mobile-btn" onclick="toggleMenu()">
         <span></span>
         <span></span>
         <span></span>
     </button>
 
+    <!-- Estrutura do Menu Lateral Deslizante (Apenas para celular) -->
     <div class="menu-lateral-mobile" id="menuLateral">
         <a href="#quem-somos" onclick="toggleMenu()">Quem Somos</a>
         <a href="#galeria" onclick="toggleMenu()">Galeria</a>
         <a href="#musicas" onclick="toggleMenu()">Trilha Sonora</a>
         <a href="#beautiful-sepulcro" onclick="toggleMenu()">Beautiful Sepulcro</a>
         <a href="#quiz" onclick="toggleMenu()">O Quiz</a>
+        <a href="#uma-people" onclick="toggleMenu()">Uma people que é beauty</a>
+        <a href="#amigue-conosco" onclick="toggleMenu()">Amigue conosco!</a>
     </div>
 
+    <!-- Header Principal -->
     <header>
         <h1>Beautiful People</h1>
         <nav>
@@ -376,10 +381,13 @@
                 <li><a href="#musicas">Trilha Sonora</a></li>
                 <li><a href="#beautiful-sepulcro">Beautiful Sepulcro</a></li>
                 <li><a href="#quiz">O Quiz</a></li>
+                <li><a href="#uma-people">Uma people que é beauty</a></li>
+                <li><a href="#amigue-conosco">Amigue conosco!</a></li>
             </ul>
         </nav>
     </header>
 
+    <!-- QUEM SOMOS -->
     <section id="quem-somos">
         <h2>Os Beauty's</h2>
         <div class="amigos-grid">
@@ -421,6 +429,7 @@
         </div>
     </section>
 
+    <!-- GALERIA -->
     <section id="galeria">
         <h2>Registros & Rolês</h2>
         <div class="sessao-galeria">
@@ -446,6 +455,7 @@
         </div>
     </section>
 
+    <!-- MÚSICAS -->
     <section id="musicas">
         <h2>Fitas de Rolo & Trilhas</h2>
         <div class="musicas-list">
@@ -473,9 +483,10 @@
         </div>
     </section>
 
+    <!-- BEAUTIFUL SEPULCRO -->
     <section id="beautiful-sepulcro">
         <h2>Beautiful Sepulcro 💀</h2>
-        <p class="sepulcro-aviso">In memória daqueles que estão fracos na fé ou se perderam pelo caminho...</p>
+        <p class="sepulcro-aviso">Em memória daqueles que estão fracos na fé ou se perderam pelo caminho...</p>
         <div class="ex-amigos-grid">
             <div class="ex-amigo-card">
                 <img src="pietra.jfif" alt="Retrato de Luto">
@@ -492,6 +503,7 @@
         </div>
     </section>
 
+    <!-- QUIZ -->
     <section id="quiz">
         <h2 style="margin-top: 40px;">Quem Sabe Mais? (O Quiz)</h2>
         <div class="quiz-container">
@@ -516,11 +528,49 @@
         </div>
     </section>
 
+    <!-- UMA PEOPLE QUE É BEAUTY -->
+    <section id="uma-people">
+        <h2>Uma people que é beauty</h2>
+        <div class="amigos-grid" style="grid-template-columns: 1fr; max-width: 400px; margin: 0 auto;">
+            <div class="amigo-card">
+                <!-- Altere o src para o nome do arquivo da foto que você quer usar -->
+                <img src="deborah.jfif" alt="People em Destaque">
+                <h3>Destaque da Semana</h3>
+                <p>Pra quando precisarmos de batuques de bateria!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- AMIGUE CONOSCO -->
+    <section id="amigue-conosco">
+        <h2>Amigue conosco!</h2>
+        <div class="quiz-container" style="max-width: 700px; text-align: center;">
+            <p style="font-size: 1.6rem; margin-bottom: 20px; color: var(--vermelho-principal); font-weight: bold;">
+                Quer fazer parte da banca mais exclusiva da internet?
+            </p>
+            <p style="margin-bottom: 30px;">
+                Mande sua aplicação para nós! Diga quem você é, por que você merece estar aqui e, o mais importante: qual a sua opinião sincera sobre os Beatles e sobre faltar em rolês por causa de mosquitos.
+            </p>
+            
+            <form style="display: flex; flex-direction: column; gap: 15px; text-align: left;" onsubmit="alert('Aplicação enviada com sucesso! Nossa banca avaliará seu caráter em até 40 dias úteis.'); return false;">
+                <label style="font-weight: bold; color: var(--vermelho-principal);">Seu Nome / Vulgo:</label>
+                <input type="text" required style="padding: 10px; font-family: 'Gochi Hand', cursive; font-size: 1.2rem; border: 2px solid var(--marrom-escuro); background: var(--fundo-pagina);">
+                
+                <label style="font-weight: bold; color: var(--vermelho-principal);">Por que devemos te aceitar?</label>
+                <textarea rows="4" required style="padding: 10px; font-family: 'Gochi Hand', cursive; font-size: 1.2rem; border: 2px solid var(--marrom-escuro); background: var(--fundo-pagina); resize: none;"></textarea>
+                
+                <button type="submit" class="quiz-btn" style="text-align: center; margin-top: 10px; font-weight: bold; background-color: var(--vermelho-principal); color: white;">
+                    Enviar Aplicação para Evaluation
+                </button>
+            </form>
+        </div>
+    </section>
+
     <footer>
         <p>Beautiful People — 2026</p>
     </footer>
 
-    <script strain="javascript">
+    <script>
         // Função do Quiz
         function responder(idPergunta, deucerto) {
             const perguntaDiv = document.getElementById(idPergunta);
@@ -535,13 +585,13 @@
             feedbackDiv.style.display = "block";
         }
 
-        // 1. Abre e fecha o menu deslizante lateral no mobile
+        // Abre e fecha o menu deslizante lateral no mobile
         function toggleMenu() {
             const menu = document.getElementById('menuLateral');
             menu.classList.toggle('active');
         }
 
-        // 2. Controla o Header para sumir ao rolar para baixo e reaparecer ao subir
+        // Controla o Header para sumir ao rolar para baixo e reaparecer ao subir
         let ultimaRolagem = 0;
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
