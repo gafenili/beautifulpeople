@@ -237,6 +237,33 @@
             font-size: 1.4rem;
             display: none;
         }
+        .jogos-subtitulo {
+            color: var(--vermelho-principal);
+            font-size: 2rem;
+            margin: 10px 0 20px;
+            text-align: center;
+        }
+        .opcoes-quem-provavel {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+        .quem-provavel-btn {
+            text-align: center;
+        }
+        .resultado-voto {
+            color: #000000;
+            min-height: 1.5em;
+            text-align: center;
+            white-space: pre-line;
+        }
+        .acoes-mais-provavel {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
 
         footer { text-align: center; padding: 40px; color: var(--fundo-pagina); background-color: var(--marrom-escuro); }
 
@@ -341,6 +368,10 @@
             .menu-lateral-mobile a:hover {
                 color: var(--fundo-pagina);
             }
+
+            .opcoes-quem-provavel {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Configuração para Computador (Esconde o que é do celular) */
@@ -366,7 +397,7 @@
         <a href="#galeria" onclick="toggleMenu()">Galeria</a>
         <a href="#musicas" onclick="toggleMenu()">Trilha Sonora</a>
         <a href="#beautiful-sepulcro" onclick="toggleMenu()">Beautiful Sepulcro</a>
-        <a href="#quiz" onclick="toggleMenu()">O Quiz</a>
+        <a href="#jogos-da-galera" onclick="toggleMenu()">Jogos da Galera</a>
         <a href="#uma-people" onclick="toggleMenu()">Uma people que é beauty</a>
         <a href="#amigue-conosco" onclick="toggleMenu()">Amigue conosco!</a>
     </div>
@@ -380,7 +411,7 @@
                 <li><a href="#galeria">Galeria</a></li>
                 <li><a href="#musicas">Trilha Sonora</a></li>
                 <li><a href="#beautiful-sepulcro">Beautiful Sepulcro</a></li>
-                <li><a href="#quiz">O Quiz</a></li>
+                <li><a href="#jogos-da-galera">Jogos da Galera</a></li>
                 <li><a href="#uma-people">Uma people que é beauty</a></li>
                 <li><a href="#amigue-conosco">Amigue conosco!</a></li>
             </ul>
@@ -485,7 +516,7 @@
 
     <!-- BEAUTIFUL SEPULCRO -->
     <section id="beautiful-sepulcro">
-        <h2>Beautiful Sepulcro 💀</h2>
+        <h2>Beautiful Sepulcro</h2>
         <p class="sepulcro-aviso">Em memória daqueles que estão fracos na fé ou se perderam pelo caminho...</p>
         <div class="ex-amigos-grid">
             <div class="ex-amigo-card">
@@ -503,64 +534,497 @@
         </div>
     </section>
 
-    <!-- QUIZ -->
-    <section id="quiz">
-        <h2 style="margin-top: 40px;">Quem Sabe Mais? (O Quiz)</h2>
-        <div class="quiz-container">
+    <!-- JOGOS DA GALERA -->
+<section id="jogos-da-galera">
+    <h2 style="margin-top: 40px;">Jogos da Galera</h2>
+    <h3 class="jogos-subtitulo">Quem Sabe Mais? (O Quiz)</h3>
+    <div class="quiz-container">
+        <div id="quiz-perguntas">
+            
             <div class="pergunta" id="p1">
                 <p>1. Qual o mais provável de furar um rolê por ter mosquitos la?</p>
                 <div class="opcoes-btn">
-                    <button class="quiz-btn" onclick="responder('p1', false)">O piopio</button>
-                    <button class="quiz-btn" onclick="responder('p1', true)">A Tali</button>
-                    <button class="quiz-btn" onclick="responder('p1', false)">O jamalzinho</button>
+                    <button type="button" class="quiz-btn" onclick="responder('p1', false)">O piopio</button>
+                    <button type="button" class="quiz-btn" onclick="responder('p1', true)">A Tali</button>
+                    <button type="button" class="quiz-btn" onclick="responder('p1', false)">O jamalzinho</button>
                 </div>
                 <div class="feedback"></div>
             </div>
+
             <div class="pergunta" id="p2">
                 <p>2. Na fase boa, quem comeria mais num self service?</p>
                 <div class="opcoes-btn">
-                    <button class="quiz-btn" onclick="responder('p2', true)">Araujo Prime</button>
-                    <button class="quiz-btn" onclick="responder('p2', false)">O Jamal Prime</button>
-                    <button class="quiz-btn" onclick="responder('p2', false)">O Fenili Prime</button>
+                    <button type="button" class="quiz-btn" onclick="responder('p2', true)">Araujo Prime</button>
+                    <button type="button" class="quiz-btn" onclick="responder('p2', false)">O Jamal Prime</button>
+                    <button type="button" class="quiz-btn" onclick="responder('p2', false)">O Fenili Prime</button>
                 </div>
                 <div class="feedback"></div>
             </div>
-        </div>
-    </section>
 
+            <div class="pergunta" id="p3">
+                <p>3. Qual o sabor de pizza ideal pra sábado a noite?</p>
+                <div class="opcoes-btn">
+                    <button type="button" class="quiz-btn" onclick="responder('p3', false)">Portuguesa</button>
+                    <button type="button" class="quiz-btn" onclick="responder('p3', true)">Calabresa</button>
+                    <button type="button" class="quiz-btn" onclick="responder('p3', true)">Sortido, porra</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="pergunta" id="p4">
+                <p>4. Qual o melhor jogador no cidade dorme?</p>
+                <div class="opcoes-btn">
+                    <button type="button" class="quiz-btn" onclick="responder('p4', false)">Piovesan</button>
+                    <button type="button" class="quiz-btn" onclick="responder('p4', false)">Araujo</button>
+                    <button type="button" class="quiz-btn" onclick="responder('p4', false)">Maju</button>
+                    <button type="button" class="quiz-btn" onclick="responder('p4', true)">Fenili</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="pergunta" id="p5">
+                <p>5. Quem tem o melhor gosto musical do grupo?</p>
+                <div class="opcoes-btn">
+                    <button type="button" class="quiz-btn" onclick="responder('p5', false)">Piovesan e Maju</button>
+                    <button type="button" class="quiz-btn" onclick="responder('p5', true)">o Fenili sozinho ouve as melhores</button>
+                    <button type="button" class="quiz-btn" onclick="responder('p5', false)">Edi e Tali</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="pergunta" id="p6">
+                <p>6. Qual o beuty mais chato?</p>
+                <div class="opcoes-btn">
+                    <button type="button" class="quiz-btn" onclick="responder('p6', false)">Fenili</button>
+                    <button type="button" class="quiz-btn" onclick="responder('p6', false)">Araujo</button>
+                    <button type="button" class="quiz-btn" onclick="responder('p6', true)">Jamal</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="pergunta" id="p7">
+                <p>7. Quem é o mais furão do grupo?</p>
+                <div class="opcoes-btn">
+                    <button type="button" class="quiz-btn" onclick="responder('p7', true)">Guilherme</button>
+                    <button type="button" class="quiz-btn" onclick="responder('p7', true)">Otavio</button>
+                    <button type="button" class="quiz-btn" onclick="responder('p7', true)">Piovesan</button>
+                </div>
+                <div class="feedback"></div>
+            </div>
+
+            <div class="pergunta" id="p8" style="margin-bottom: 20px;">
+                <p>8. Qual o sabor de preferido de pizza do Fenili?</p>
+                <div class="opcoes-btn">
+                    <button type="button" class="quiz-btn" onclick="responder('p8', false)">Calabresa</button>
+                    <button type="button" class="quiz-btn" onclick="responder('p8', true)">Sortido</button>
+                    <button type="button" class="quiz-btn" onclick="responder('p8', false)">Strogonoff de Frango</button>
+                </div>
+                <div class="feedback" style="display: none; margin-top: 10px; font-weight: bold;"></div>
+            </div>
+
+        </div> <!-- fecha #quiz-perguntas -->
+    </div> <!-- fecha .quiz-container -->
+
+    <div id="quiz-final" style="display: none; text-align: center; margin-top: 30px; padding: 20px; background-color: var(--creme-fosco); border: 3px solid var(--marrom-escuro);">
+        <h3 style="font-size: 2rem; color: var(--vermelho-principal); margin-bottom: 10px;">Quiz Concluído!</h3>
+        <p style="margin-bottom: 15px; font-weight: bold; font-size: 1.2rem;" id="resultado-pontos"></p>
+        <form onsubmit="salvarNoRanking(event)">
+            <label for="nome-participante" style="display: block; margin-bottom: 8px;">Como quer aparecer no ranking?</label>
+            <input type="text" id="nome-participante" placeholder="Digite seu nome ou vulgo" maxlength="40" autocomplete="name" style="padding: 10px; font-family: 'Gochi Hand', cursive; font-size: 1.3rem; border: 2px solid var(--marrom-escuro); background: var(--fundo-pagina); width: 80%; margin-bottom: 15px; text-align: center;">
+            <br>
+            <button type="submit" class="quiz-btn" style="background: var(--vermelho-principal); color: white; margin: 0 auto; display: inline-block;">
+                Salvar no Ranking
+            </button>
+        </form>
+    </div>
+
+    <div class="quiz-container" id="ranking" style="margin-top: 40px;">
+        <h3 style="font-size: 2rem; color: var(--vermelho-principal); text-align: center;">Placar dos Acertos</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 15px; background-color: var(--creme-fosco); border: 3px solid var(--marrom-escuro);">
+            <thead>
+                <tr>
+                    <th style="padding: 12px; border: 2px solid var(--marrom-escuro); text-align: center; background-color: var(--vermelho-principal); color: var(--creme-fosco); font-size: 1.4rem;">Posição</th>
+                    <th style="padding: 12px; border: 2px solid var(--marrom-escuro); text-align: center; background-color: var(--vermelho-principal); color: var(--creme-fosco); font-size: 1.4rem;">Nome</th>
+                    <th style="padding: 12px; border: 2px solid var(--marrom-escuro); text-align: center; background-color: var(--vermelho-principal); color: var(--creme-fosco); font-size: 1.4rem;">Acertos</th>
+                </tr>
+            </thead>
+            <tbody id="ranking-corpo">
+            </tbody>
+        </table>
+    </div>
+
+    <h3 class="jogos-subtitulo" style="margin-top: 55px;">Quem é mais provável?</h3>
+    <div class="quiz-container" id="quem-mais-provavel">
+        <p id="pergunta-mais-provavel" class="pergunta" style="padding-bottom: 15px;"></p>
+        <div id="opcoes-mais-provavel" class="opcoes-quem-provavel"></div>
+        <p id="resultado-mais-provavel" class="feedback resultado-voto" aria-live="polite"></p>
+        <div class="acoes-mais-provavel">
+            <button type="button" class="quiz-btn" style="text-align: center;" onclick="mostrarResultadoMaisProvavel()">
+                Ver porcentagens
+            </button>
+            <button type="button" class="quiz-btn" style="text-align: center;" onclick="proximaPerguntaMaisProvavel()">
+                Outra pergunta
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script>
+       // Variáveis de controle do Quiz
+let acertos = 0;
+let perguntasRespondidas = 0;
+const totalPerguntas = 8;
+const frasesAcerto = [
+    "Parabéns, você acertou e fez o Fenili feliz!",
+    "Acertou, agora as pessoas são ainda mais beautys!",
+    "Nós somos amigos, essa era sua obrigação, pô.",
+    "Mandou bem demais, você conhece a trupe!",
+    "Perfeito! O Fenili aprova essa resposta.",
+    "Parabéns! Você acertou e agora o Jô ganhou mais musculos!",
+    "Acerto bonito! Pode comemorar.",
+    "Muito bom! O coração da Maju cresceu mais um pouco depois desse acerto!"
+];
+const frasesErro = [
+    "Prolac tá alta, você errou :(",
+    "Puta que pariu, hein, ERROU!",
+    "Nós realmente somos amigos? Tá errado:(",
+    "Droga! Você errou e agora o Araujo não consegue vender no market place :(",
+    "Acertooou...só que NÃO!",
+    "Essa pegou você de surpresa, né? ERROU!",
+    "Ah não! Você errou e os mosquitos raptaram a Tali :(",
+    "Resposta errada, mas a amizade continua, eu acho..."
+];
+const perguntasMaisProvavel = [
+    "Quem é mais provável de chegar atrasado em um rolê?",
+    "Quem é mais provável de mandar um áudio de cinco minutos?",
+    "Quem é mais provável de sugerir pedir lanche às 23h?",
+    "Quem é mais provável de animar uma viagem de última hora?",
+    "Quem é mais provável de dormir primeiro durante uma viagem?",
+    "Quem é mais provável de esquecer o próprio copo em algum lugar?",
+    "Quem é mais provável de escolher a música do rolê?",
+    "Quem é mais provável de transformar uma conversa simples em debate?",
+    "Quem é mais provável de aparecer com uma história inacreditável?",
+    "Quem é mais provável de cancelar porque está cansado(a)?"
+];
+const participantesMaisProvavel = ["Araujo", "Jô", "Fenili", "Maju", "Edi", "Tali", "Piovesan"];
+let indicePerguntaMaisProvavel = -1;
+let clienteSupabase = null;
+
+// Inicia carregando o ranking salvo no navegador
+document.addEventListener("DOMContentLoaded", () => {
+    atualizarTabelaRanking();
+    inicializarVotacaoMaisProvavel();
+});
+
+async function inicializarVotacaoMaisProvavel() {
+    const configuracaoValida = window.SUPABASE_URL &&
+        window.SUPABASE_PUBLISHABLE_KEY &&
+        !window.SUPABASE_URL.includes('COLE_A_URL') &&
+        !window.SUPABASE_PUBLISHABLE_KEY.includes('COLE_A_PUBLISHABLE');
+
+    if (!configuracaoValida || !window.supabase) {
+        await proximaPerguntaMaisProvavel();
+        return;
+    }
+
+    clienteSupabase = window.supabase.createClient(
+        window.SUPABASE_URL,
+        window.SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const { data: { session }, error: erroSessao } = await clienteSupabase.auth.getSession();
+    if (erroSessao) {
+        clienteSupabase = null;
+        await proximaPerguntaMaisProvavel();
+        mostrarStatusMaisProvavel('Não foi possível iniciar a votação agora. Tente novamente mais tarde.');
+        return;
+    }
+
+    if (!session) {
+        const { error: erroLogin } = await clienteSupabase.auth.signInAnonymously();
+        if (erroLogin) {
+            clienteSupabase = null;
+            await proximaPerguntaMaisProvavel();
+            mostrarStatusMaisProvavel('Não foi possível identificar seu voto. Tente novamente mais tarde.');
+            return;
+        }
+    }
+
+    await proximaPerguntaMaisProvavel();
+}
+
+async function proximaPerguntaMaisProvavel() {
+    let novoIndice = Math.floor(Math.random() * perguntasMaisProvavel.length);
+    if (perguntasMaisProvavel.length > 1) {
+        while (novoIndice === indicePerguntaMaisProvavel) {
+            novoIndice = Math.floor(Math.random() * perguntasMaisProvavel.length);
+        }
+    }
+    indicePerguntaMaisProvavel = novoIndice;
+
+    const pergunta = document.getElementById('pergunta-mais-provavel');
+    const opcoes = document.getElementById('opcoes-mais-provavel');
+    const resultado = document.getElementById('resultado-mais-provavel');
+
+    pergunta.textContent = perguntasMaisProvavel[indicePerguntaMaisProvavel];
+    opcoes.innerHTML = '';
+    participantesMaisProvavel.forEach(nome => {
+        const botao = document.createElement('button');
+        botao.type = 'button';
+        botao.className = 'quiz-btn quem-provavel-btn';
+        botao.textContent = nome;
+        botao.addEventListener('click', () => registrarVotoMaisProvavel(nome));
+        opcoes.appendChild(botao);
+    });
+
+    resultado.textContent = '';
+    resultado.style.display = 'none';
+
+    if (!clienteSupabase) {
+        desabilitarOpcoesMaisProvavel(true);
+        mostrarStatusMaisProvavel('A votação compartilhada será liberada assim que a configuração do Supabase for concluída.');
+        return;
+    }
+
+    if (votoLocalRegistrado()) {
+        desabilitarOpcoesMaisProvavel(true);
+        await mostrarResultadoMaisProvavel();
+    }
+}
+
+async function registrarVotoMaisProvavel(nome) {
+    if (!clienteSupabase || votoLocalRegistrado()) return;
+
+    desabilitarOpcoesMaisProvavel(true);
+    mostrarStatusMaisProvavel('Registrando seu voto...');
+
+    const { error } = await clienteSupabase
+        .from('votos_mais_provavel')
+        .insert({ pergunta_id: indicePerguntaMaisProvavel + 1, participante: nome });
+
+    if (error) {
+        if (error.code === '23505') {
+            marcarVotoLocal();
+            mostrarStatusMaisProvavel('Seu voto nesta pergunta já foi registrado.');
+            await mostrarResultadoMaisProvavel();
+            return;
+        }
+
+        desabilitarOpcoesMaisProvavel(false);
+        mostrarStatusMaisProvavel('Não foi possível registrar seu voto. Tente novamente.');
+        return;
+    }
+
+    marcarVotoLocal();
+    mostrarStatusMaisProvavel('Voto registrado! Veja abaixo como ficou a votação.');
+    await mostrarResultadoMaisProvavel();
+}
+
+async function mostrarResultadoMaisProvavel() {
+    const resultado = document.getElementById('resultado-mais-provavel');
+    if (!clienteSupabase) {
+        mostrarStatusMaisProvavel('A votação compartilhada ainda não está configurada.');
+        return;
+    }
+
+    const { data, error } = await clienteSupabase.rpc('resultado_mais_provavel', {
+        p_pergunta_id: indicePerguntaMaisProvavel + 1
+    });
+
+    if (error) {
+        mostrarStatusMaisProvavel('Não foi possível carregar o resultado agora.');
+        return;
+    }
+
+    const totalVotos = data.reduce((total, item) => total + Number(item.total), 0);
+
+    if (totalVotos === 0) {
+        mostrarStatusMaisProvavel('Ainda não há votos para mostrar as porcentagens.');
+        return;
+    }
+
+    const porcentagens = data.map((item, indice) => {
+        const votos = Number(item.total);
+        const porcentagem = Math.round((votos / totalVotos) * 100);
+        return `${indice + 1}. ${item.participante} — ${porcentagem}% (${votos} ${votos === 1 ? 'voto' : 'votos'})`;
+    });
+
+    resultado.textContent = `Resultado com ${totalVotos} ${totalVotos === 1 ? 'voto' : 'votos'}:\n${porcentagens.join('\n')}`;
+    resultado.style.display = 'block';
+}
+
+function desabilitarOpcoesMaisProvavel(desabilitar) {
+    document.querySelectorAll('#opcoes-mais-provavel button').forEach(botao => botao.disabled = desabilitar);
+}
+
+function chaveVotoMaisProvavel() {
+    return `mais-provavel-voto-${indicePerguntaMaisProvavel + 1}`;
+}
+
+function votoLocalRegistrado() {
+    try {
+        return localStorage.getItem(chaveVotoMaisProvavel()) === 'registrado';
+    } catch {
+        return false;
+    }
+}
+
+function marcarVotoLocal() {
+    try {
+        localStorage.setItem(chaveVotoMaisProvavel(), 'registrado');
+    } catch {
+        // O banco de dados ainda impede votos duplicados se o navegador bloquear o armazenamento local.
+    }
+}
+
+function mostrarStatusMaisProvavel(mensagem) {
+    const resultado = document.getElementById('resultado-mais-provavel');
+    resultado.textContent = mensagem;
+    resultado.style.display = 'block';
+}
+
+function responder(idPergunta, deucerto) {
+    const perguntaDiv = document.getElementById(idPergunta);
+    const feedbackDiv = perguntaDiv.querySelector('.feedback');
+    
+    const botoes = perguntaDiv.querySelectorAll('.quiz-btn');
+    botoes.forEach(btn => btn.disabled = true);
+
+    if(deucerto) {
+        feedbackDiv.textContent = frasesAcerto[Math.floor(Math.random() * frasesAcerto.length)];
+        acertos++;
+    } else {
+        feedbackDiv.textContent = frasesErro[Math.floor(Math.random() * frasesErro.length)];
+    }
+    feedbackDiv.style.color = "#000000";
+    feedbackDiv.style.display = "block";
+    
+    perguntasRespondidas++;
+
+    if(perguntasRespondidas === totalPerguntas) {
+        setTimeout(() => {
+            document.getElementById('quiz-perguntas').style.display = 'none';
+            document.getElementById('resultado-pontos').innerText = `Você acertou ${acertos} de ${totalPerguntas} perguntas!`;
+            
+            const cardFinal = document.getElementById('quiz-final');
+            cardFinal.style.display = 'block';
+            
+            cardFinal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 1500);
+    }
+}
+
+function salvarNoRanking(event) {
+    if (event) event.preventDefault();
+
+    const nomeInput = document.getElementById('nome-participante');
+    const nome = nomeInput.value.trim() || "Anônimo Autêntico";
+
+    let ranking = JSON.parse(localStorage.getItem('beautifulRanking')) || [];
+    ranking.push({ nome: nome, acertos: acertos });
+
+    ranking.sort((a, b) => b.acertos - a.acertos);
+    localStorage.setItem('beautifulRanking', JSON.stringify(ranking));
+
+    nomeInput.value = "";
+    acertos = 0;
+    perguntasRespondidas = 0;
+    
+    document.querySelectorAll('.quiz-btn').forEach(btn => btn.disabled = false);
+    document.querySelectorAll('.feedback').forEach(f => f.style.display = 'none');
+    document.getElementById('quiz-final').style.display = 'none';
+    document.getElementById('quiz-perguntas').style.display = 'block';
+
+    atualizarTabelaRanking();
+
+    document.getElementById('ranking').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function atualizarTabelaRanking() {
+    const ranking = JSON.parse(localStorage.getItem('beautifulRanking')) || [];
+    const corpoTabela = document.getElementById('ranking-corpo');
+    
+    if(!corpoTabela) return;
+
+    if(ranking.length === 0) {
+        corpoTabela.innerHTML = `<tr><td colspan="3" style="font-style: italic; text-align: center; padding: 12px; border: 2px solid var(--marrom-escuro);">Nenhum recorde ainda. Seja o primeiro!</td></tr>`;
+        return;
+    }
+
+    corpoTabela.innerHTML = ranking.map((player, index) => {
+        let medalha = index + 1;
+        if(index === 0) medalha = "1º";
+        if(index === 1) medalha = "2º";
+        if(index === 2) medalha = "3º";
+
+        return `
+            <tr>
+                <td style="padding: 12px; border: 2px solid var(--marrom-escuro); text-align: center; font-weight: bold;">${medalha}</td>
+                <td style="padding: 12px; border: 2px solid var(--marrom-escuro); text-align: center;">${player.nome}</td>
+                <td style="padding: 12px; border: 2px solid var(--marrom-escuro); text-align: center; color: var(--vermelho-principal); font-weight: bold;">${player.acertos} / ${totalPerguntas}</td>
+            </tr>
+        `;
+    }).join('');
+}
+
+function toggleMenu() {
+    const menu = document.getElementById('menuLateral');
+    menu.classList.toggle('active');
+}
+
+let ultimaRolagem = 0;
+window.addEventListener('scroll', () => {
+    const header = document.querySelector('header');
+    if (!header) return;
+    
+    const rolagemAtual = window.pageYOffset;
+
+    if (rolagemAtual <= 0) {
+        header.classList.remove('escondido');
+        return;
+    }
+    if (rolagemAtual > ultimaRolagem && !header.classList.contains('escondido')) {
+        header.classList.add('escondido');
+    } else if (rolagemAtual < ultimaRolagem && header.classList.contains('escondido')) {
+        header.classList.remove('escondido');
+    }
+    ultimaRolagem = rolagemAtual;
+});
+    </script>
+</section>
     <!-- UMA PEOPLE QUE É BEAUTY -->
     <section id="uma-people">
         <h2>Uma people que é beauty</h2>
         <div class="amigos-grid" style="grid-template-columns: 1fr; max-width: 400px; margin: 0 auto;">
             <div class="amigo-card">
                 <!-- Altere o src para o nome do arquivo da foto que você quer usar -->
-                <img src="deborah.jfif" alt="People em Destaque">
+                <img src="matsunaga.jfif" alt="People em Destaque">
                 <h3>Destaque da Semana</h3>
-                <p>Pra quando precisarmos de batuques de bateria!</p>
+                <p>Asiatico, gente boa, moral e frequentemente lembrado no grupo essa semana!</p>
             </div>
         </div>
     </section>
-
     <!-- AMIGUE CONOSCO -->
     <section id="amigue-conosco">
         <h2>Amigue conosco!</h2>
         <div class="quiz-container" style="max-width: 700px; text-align: center;">
             <p style="font-size: 1.6rem; margin-bottom: 20px; color: var(--vermelho-principal); font-weight: bold;">
-                Quer fazer parte da banca mais exclusiva da internet?
+                Seja você também uma beautiful people!
             </p>
             <p style="margin-bottom: 30px;">
-                Mande sua aplicação para nós! Diga quem você é, por que você merece estar aqui e, o mais importante: qual a sua opinião sincera sobre os Beatles e sobre faltar em rolês por causa de mosquitos.
+               Mande seu nome e o sabor de pizza que você escolhe sábado a noite que avaliaremos sua resposta!
             </p>
             
             <form style="display: flex; flex-direction: column; gap: 15px; text-align: left;" onsubmit="alert('Aplicação enviada com sucesso! Nossa banca avaliará seu caráter em até 40 dias úteis.'); return false;">
-                <label style="font-weight: bold; color: var(--vermelho-principal);">Seu Nome / Vulgo:</label>
+                <label style="font-weight: bold; color: var(--vermelho-principal);">Seu Nome:</label>
                 <input type="text" required style="padding: 10px; font-family: 'Gochi Hand', cursive; font-size: 1.2rem; border: 2px solid var(--marrom-escuro); background: var(--fundo-pagina);">
                 
                 <label style="font-weight: bold; color: var(--vermelho-principal);">Por que devemos te aceitar?</label>
                 <textarea rows="4" required style="padding: 10px; font-family: 'Gochi Hand', cursive; font-size: 1.2rem; border: 2px solid var(--marrom-escuro); background: var(--fundo-pagina); resize: none;"></textarea>
                 
                 <button type="submit" class="quiz-btn" style="text-align: center; margin-top: 10px; font-weight: bold; background-color: var(--vermelho-principal); color: white;">
-                    Enviar Aplicação para Evaluation
+                    Enviar resposta para avaliação.
                 </button>
             </form>
         </div>
@@ -569,45 +1033,5 @@
     <footer>
         <p>Beautiful People — 2026</p>
     </footer>
-
-    <script>
-        // Função do Quiz
-        function responder(idPergunta, deucerto) {
-            const perguntaDiv = document.getElementById(idPergunta);
-            const feedbackDiv = perguntaDiv.querySelector('.feedback');
-            if(deucerto) {
-                feedbackDiv.innerHTML = "🎯 Na mosca! História real.";
-                feedbackDiv.style.color = "#21130b";
-            } else {
-                feedbackDiv.innerHTML = "❌ Errou! Tente lembrar melhor...";
-                feedbackDiv.style.color = "#8c251c";
-            }
-            feedbackDiv.style.display = "block";
-        }
-
-        // Abre e fecha o menu deslizante lateral no mobile
-        function toggleMenu() {
-            const menu = document.getElementById('menuLateral');
-            menu.classList.toggle('active');
-        }
-
-        // Controla o Header para sumir ao rolar para baixo e reaparecer ao subir
-        let ultimaRolagem = 0;
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            const rolagemAtual = window.pageYOffset;
-
-            if (rolagemAtual <= 0) {
-                header.classList.remove('escondido');
-                return;
-            }
-            if (rolagemAtual > ultimaRolagem && !header.classList.contains('escondido')) {
-                header.classList.add('escondido');
-            } else if (rolagemAtual < ultimaRolagem && header.classList.contains('escondido')) {
-                header.classList.remove('escondido');
-            }
-            ultimaRolagem = rolagemAtual;
-        });
-    </script>
 </body>
 </html>
