@@ -718,10 +718,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function inicializarVotacaoMaisProvavel() {
-    const configuracaoValida = window.SUPABASE_URL &&
-        window.SUPABASE_PUBLISHABLE_KEY &&
-        !window.SUPABASE_URL.includes('COLE_A_URL') &&
-        !window.SUPABASE_PUBLISHABLE_KEY.includes('COLE_A_PUBLISHABLE');
+    const configuracaoValida = window.SUPABASE_URL && window.SUPABASE_PUBLISHABLE_KEY;
 
     if (!configuracaoValida || !window.supabase) {
         await proximaPerguntaMaisProvavel();
