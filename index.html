@@ -267,6 +267,45 @@
 
         footer { text-align: center; padding: 40px; color: var(--fundo-pagina); background-color: var(--marrom-escuro); }
 
+        /* Estilos para seções retráteis (sanfona/accordion) */
+        .section-content {
+            max-height: 15000px;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out, opacity 0.3s ease, padding 0.4s ease;
+            opacity: 1;
+        }
+        
+        .section-collapsed .section-content {
+            max-height: 0 !important;
+            opacity: 0;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+            pointer-events: none;
+        }
+
+        section h2 {
+            cursor: pointer;
+            user-select: none;
+            display: inline-flex !important;
+            align-items: center;
+            gap: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            position: relative;
+        }
+
+        section h2 .seta {
+            font-size: 1.8rem;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .section-collapsed h2 .seta {
+            transform: rotate(-90deg);
+        }
+
         /* --- CONFIGURAÇÃO EXCLUSIVA PARA TELAS DE CELULAR --- */
         @media (max-width: 768px) {
             
@@ -362,7 +401,15 @@
                 color: var(--creme-fosco);
                 text-decoration: none;
                 display: block;
-                margin: 15px 0;
+                width: 80%;
+                text-align: center;
+                padding-bottom: 15px;
+                border-bottom: 2px dashed rgba(230, 223, 203, 0.3);
+                margin: 10px 0;
+            }
+            
+            .menu-lateral-mobile a:last-child {
+                border-bottom: none;
             }
             
             .menu-lateral-mobile a:hover {
@@ -420,8 +467,9 @@
 
     <!-- QUEM SOMOS -->
     <section id="quem-somos">
-        <h2>Os Beauty's</h2>
-        <div class="amigos-grid">
+        <h2 onclick="toggleSection('quem-somos')" style="cursor: pointer;">Os Beauty's <span class="seta">▼</span></h2>
+        <div class="section-content">
+            <div class="amigos-grid">
             <div class="amigo-card">
                 <img src="fenili.jfif" alt="Foto">
                 <h3>João Fenili</h3>
@@ -458,11 +506,13 @@
                 <p>O marido de aluguel da beauty.</p>
             </div>
         </div>
+        </div>
     </section>
 
     <!-- GALERIA -->
     <section id="galeria">
-        <h2>Registros & Rolês</h2>
+        <h2 onclick="toggleSection('galeria')" style="cursor: pointer;">Registros & Rolês <span class="seta">▼</span></h2>
+        <div class="section-content">
         <div class="sessao-galeria">
             <h3>Álbum 1: Ah, a Carimã</h3>
             <div class="fotos-grid">
@@ -484,11 +534,13 @@
                 </figure>
             </div>
         </div>
+        </div>
     </section>
 
     <!-- MÚSICAS -->
     <section id="musicas">
-        <h2>Fitas de Rolo & Trilhas</h2>
+        <h2 onclick="toggleSection('musicas')" style="cursor: pointer;">Fitas de Rolo & Trilhas <span class="seta">▼</span></h2>
+        <div class="section-content">
         <div class="musicas-list">
             <div class="musica-item">
                 <div class="musica-info">
@@ -512,11 +564,13 @@
                 <span style="color: var(--vermelho-principal);">Essa foi só porque eu gosto e eu que criei o site porra</span>
             </div>
         </div>
+        </div>
     </section>
 
     <!-- BEAUTIFUL SEPULCRO -->
     <section id="beautiful-sepulcro">
-        <h2>Beautiful Sepulcro</h2>
+        <h2 onclick="toggleSection('beautiful-sepulcro')" style="cursor: pointer;">Beautiful Sepulcro <span class="seta">▼</span></h2>
+        <div class="section-content">
         <p class="sepulcro-aviso">Em memória daqueles que estão fracos na fé ou se perderam pelo caminho...</p>
         <div class="ex-amigos-grid">
             <div class="ex-amigo-card">
@@ -532,11 +586,13 @@
                 <p>Disse que ia comer um Daddy's Burguer e nunca mais voltou, reza a lenda que ele só conseguiu comer 90% do lanche e sumiu de vergonha.</p>
             </div>
         </div>
+        </div>
     </section>
 
     <!-- JOGOS DA GALERA -->
 <section id="jogos-da-galera">
-    <h2 style="margin-top: 40px;">Jogos da Galera</h2>
+    <h2 onclick="toggleSection('jogos-da-galera')" style="cursor: pointer; margin-top: 40px;">Jogos da Galera <span class="seta">▼</span></h2>
+    <div class="section-content">
     <h3 class="jogos-subtitulo">Quem Sabe Mais? (O Quiz)</h3>
     <div class="quiz-container">
         <div id="quiz-perguntas">
@@ -1036,11 +1092,46 @@ function enviarFormularioAmigue(event) {
     alert('Seu aplicativo de e-mail foi aberto com a mensagem pronta. Basta clicar em "Enviar" no seu e-mail!');
     form.reset();
 }
+
+function toggleSection(id, forceState) {
+    const section = document.getElementById(id);
+    if (!section) return;
+    
+    if (forceState === 'open') {
+        section.classList.remove('section-collapsed');
+    } else if (forceState === 'close') {
+        section.classList.add('section-collapsed');
+    } else {
+        section.classList.toggle('section-collapsed');
+    }
+    
+    // Atualiza a seta (a rotação ocorre via classe CSS .section-collapsed)
+    const seta = section.querySelector('h2 .seta');
+    if (seta) {
+        if (section.classList.contains('section-collapsed')) {
+            seta.textContent = '▼';
+        }
+    }
+}
+
+// Garante que, ao clicar em links do menu, a seção alvo seja expandida automaticamente
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', () => {
+            let id = link.getAttribute('href').substring(1);
+            if (id) {
+                toggleSection(id, 'open');
+            }
+        });
+    });
+});
     </script>
+    </div>
 </section>
     <!-- UMA PEOPLE QUE É BEAUTY -->
     <section id="uma-people">
-        <h2>Uma people que é beauty</h2>
+        <h2 onclick="toggleSection('uma-people')" style="cursor: pointer;">Uma people que é beauty <span class="seta">▼</span></h2>
+        <div class="section-content">
         <div class="amigos-grid" style="grid-template-columns: 1fr; max-width: 400px; margin: 0 auto;">
             <div class="amigo-card">
                 <!-- Altere o src para o nome do arquivo da foto que você quer usar -->
@@ -1049,10 +1140,12 @@ function enviarFormularioAmigue(event) {
                 <p>Asiatico, gente boa, moral e frequentemente lembrado no grupo essa semana!</p>
             </div>
         </div>
+        </div>
     </section>
     <!-- AMIGUE CONOSCO -->
     <section id="amigue-conosco">
-        <h2>Amigue conosco!</h2>
+        <h2 onclick="toggleSection('amigue-conosco')" style="cursor: pointer;">Amigue conosco! <span class="seta">▼</span></h2>
+        <div class="section-content">
         <div class="quiz-container" style="max-width: 700px; text-align: center;">
             <p style="font-size: 1.6rem; margin-bottom: 20px; color: var(--vermelho-principal); font-weight: bold;">
                 Seja você também uma beautiful people!
@@ -1072,6 +1165,7 @@ function enviarFormularioAmigue(event) {
                     Enviar resposta para avaliação.
                 </button>
             </form>
+        </div>
         </div>
     </section>
 
