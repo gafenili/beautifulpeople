@@ -1020,36 +1020,21 @@ window.addEventListener('scroll', () => {
     ultimaRolagem = rolagemAtual;
 });
 
-async function enviarFormularioAmigue(event) {
+function enviarFormularioAmigue(event) {
     event.preventDefault();
     const form = event.target;
-    const data = new FormData(form);
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const textoOriginal = submitBtn.textContent;
+    const nome = form.querySelector('input[name="Nome"]').value;
+    const motivo = form.querySelector('textarea[name="Motivo"]').value;
     
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Enviando...';
-
-    try {
-        const response = await fetch(form.action, {
-            method: form.method,
-            body: data,
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
-        if (response.ok) {
-            alert('Aplicação enviada com sucesso! Nossa banca avaliará seu caráter em até 40 dias úteis.');
-            form.reset();
-        } else {
-            alert('Ocorreu um erro ao enviar. Tente novamente mais tarde.');
-        }
-    } catch (error) {
-        alert('Erro de conexão. Verifique sua internet.');
-    } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = textoOriginal;
-    }
+    const destinatario = "fenililopes@gmail.com";
+    const assunto = encodeURIComponent("Beautiful People - Nova Aplicação de Amigo");
+    const corpo = encodeURIComponent(`Olá!\n\nGostaria de amigar com vocês no site Beautiful People.\n\nNome: ${nome}\nPor que me aceitar: ${motivo}\n\nAbraços!`);
+    
+    // Abre o cliente de e-mail padrão do usuário com a mensagem preenchida
+    window.location.href = `mailto:${destinatario}?subject=${assunto}&body=${corpo}`;
+    
+    alert('Seu aplicativo de e-mail foi aberto com a mensagem pronta. Basta clicar em "Enviar" no seu e-mail!');
+    form.reset();
 }
     </script>
 </section>
@@ -1076,7 +1061,7 @@ async function enviarFormularioAmigue(event) {
                Mande seu nome e o sabor de pizza que você escolhe sábado a noite que avaliaremos sua resposta!
             </p>
             
-            <form id="form-amigue" action="https://formsubmit.co/ajax/fenililopes@gmail.com" method="POST" onsubmit="enviarFormularioAmigue(event)" style="display: flex; flex-direction: column; gap: 15px; text-align: left;">
+            <form id="form-amigue" onsubmit="enviarFormularioAmigue(event)" style="display: flex; flex-direction: column; gap: 15px; text-align: left;">
                 <label style="font-weight: bold; color: var(--vermelho-principal);">Seu Nome:</label>
                 <input type="text" name="Nome" required style="padding: 10px; font-family: 'Gochi Hand', cursive; font-size: 1.2rem; border: 2px solid var(--marrom-escuro); background: var(--fundo-pagina);">
                 
