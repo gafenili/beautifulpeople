@@ -654,18 +654,8 @@
     </div>
 
     <h3 class="jogos-subtitulo" style="margin-top: 55px;">Quem é mais provável?</h3>
-    <div class="quiz-container" id="quem-mais-provavel">
-        <p id="pergunta-mais-provavel" class="pergunta" style="padding-bottom: 15px;"></p>
-        <div id="opcoes-mais-provavel" class="opcoes-quem-provavel"></div>
-        <p id="resultado-mais-provavel" class="feedback resultado-voto" aria-live="polite"></p>
-        <div class="acoes-mais-provavel">
-            <button type="button" class="quiz-btn" style="text-align: center;" onclick="mostrarResultadoMaisProvavel()">
-                Ver porcentagens
-            </button>
-            <button type="button" class="quiz-btn" style="text-align: center;" onclick="proximaPerguntaMaisProvavel()">
-                Outra pergunta
-            </button>
-        </div>
+    <div id="container-perguntas-mais-provavel">
+        <!-- As perguntas serão geradas dinamicamente aqui -->
     </div>
 <script src="supabase-config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -695,19 +685,18 @@ const frasesErro = [
     "Resposta errada, mas a amizade continua, eu acho..."
 ];
 const perguntasMaisProvavel = [
-    "Quem é mais provável de chegar atrasado em um rolê?",
+    "Quem é mais provável de chegar atrasado?",
     "Quem é mais provável de mandar um áudio de cinco minutos?",
-    "Quem é mais provável de sugerir pedir lanche às 23h?",
-    "Quem é mais provável de animar uma viagem de última hora?",
-    "Quem é mais provável de dormir primeiro durante uma viagem?",
-    "Quem é mais provável de esquecer o próprio copo em algum lugar?",
+    "Quem é mais provável de ficar rico com uma ideia de negócio completamente absurda que todo mundo achava que ia dar errado?",
+    "Quem é mais provável de ser preso por engano por estar no lugar errado, na hora errada, com a pior expressão facial possível?",
+    "Quem é mais provável de cair em um golpe clássico da internet por pura distração?",
+    "Quem é mais provável de ser confundido com um herdeiro excêntrico disfarçado apenas pelo jeito de se vestir e de andar na rua?",
     "Quem é mais provável de escolher a música do rolê?",
     "Quem é mais provável de transformar uma conversa simples em debate?",
     "Quem é mais provável de aparecer com uma história inacreditável?",
     "Quem é mais provável de cancelar porque está cansado(a)?"
 ];
 const participantesMaisProvavel = ["Araujo", "Jô", "Fenili", "Maju", "Edi", "Tali", "Piovesan"];
-let indicePerguntaMaisProvavel = -1;
 let clienteSupabase = null;
 
 // Inicia carregando o ranking salvo no navegador
@@ -720,7 +709,7 @@ async function inicializarVotacaoMaisProvavel() {
     const configuracaoValida = window.SUPABASE_URL && window.SUPABASE_PUBLISHABLE_KEY;
 
     if (!configuracaoValida || !window.supabase) {
-        await proximaPerguntaMaisProvavel();
+        renderizarTodasPerguntasMaisProvavel();
         return;
     }
 
@@ -732,8 +721,8 @@ async function inicializarVotacaoMaisProvavel() {
     const { data: { session }, error: erroSessao } = await clienteSupabase.auth.getSession();
     if (erroSessao) {
         clienteSupabase = null;
-        await proximaPerguntaMaisProvavel();
-        mostrarStatusMaisProvavel('Não foi possível iniciar a votação agora. Tente novamente mais tarde.');
+        renderizarTodasPerguntasMaisProvavel();
+        mostrarStatusGeralMaisProvavel('Não foi possível iniciar a votação agora. Tente novamente mais tarde.');
         return;
     }
 
@@ -741,143 +730,186 @@ async function inicializarVotacaoMaisProvavel() {
         const { error: erroLogin } = await clienteSupabase.auth.signInAnonymously();
         if (erroLogin) {
             clienteSupabase = null;
-            await proximaPerguntaMaisProvavel();
-            mostrarStatusMaisProvavel('Não foi possível identificar seu voto. Tente novamente mais tarde.');
+            renderizarTodasPerguntasMaisProvavel();
+            mostrarStatusGeralMaisProvavel('Não foi possível identificar seu voto. Tente novamente mais tarde.');
             return;
         }
     }
 
-    await proximaPerguntaMaisProvavel();
+    renderizarTodasPerguntasMaisProvavel();
 }
 
-async function proximaPerguntaMaisProvavel() {
-    let novoIndice = Math.floor(Math.random() * perguntasMaisProvavel.length);
-    if (perguntasMaisProvavel.length > 1) {
-        while (novoIndice === indicePerguntaMaisProvavel) {
-            novoIndice = Math.floor(Math.random() * perguntasMaisProvavel.length);
+function mostrarStatusGeralMaisProvavel(mensagem) {
+    const container = document.getElementById('container-perguntas-mais-provavel');
+    const p = document.createElement('p');
+    p.style.textAlign = 'center';
+    p.style.fontWeight = 'bold';
+    p.style.color = 'var(--vermelho-principal)';
+    p.style.fontSize = '1.4rem';
+    p.textContent = mensagem;
+    container.insertBefore(p, container.firstChild);
+}
+
+function renderizarTodasPerguntasMaisProvavel() {
+    const container = document.getElementById('container-perguntas-mais-provavel');
+    container.innerHTML = '';
+
+    perguntasMaisProvavel.forEach((perguntaText, indice) => {
+        const divContainer = document.createElement('div');
+        divContainer.className = 'quiz-container';
+        divContainer.id = `quem-mais-provavel-${indice}`;
+        divContainer.style.marginBottom = '30px';
+
+        // Pergunta enumerada
+        const pPergunta = document.createElement('p');
+        pPergunta.className = 'pergunta';
+        pPergunta.style.paddingBottom = '15px';
+        pPergunta.textContent = `${indice + 1}. ${perguntaText}`;
+        divContainer.appendChild(pPergunta);
+
+        // Opções (botões dos participantes)
+        const divOpcoes = document.createElement('div');
+        divOpcoes.className = 'opcoes-quem-provavel';
+        divOpcoes.id = `opcoes-mais-provavel-${indice}`;
+        
+        participantesMaisProvavel.forEach(nome => {
+            const botao = document.createElement('button');
+            botao.type = 'button';
+            botao.className = 'quiz-btn quem-provavel-btn';
+            botao.textContent = nome;
+            botao.addEventListener('click', () => registrarVotoMaisProvavel(indice, nome));
+            divOpcoes.appendChild(botao);
+        });
+        divContainer.appendChild(divOpcoes);
+
+        // Feedback / Resultado
+        const pResultado = document.createElement('p');
+        pResultado.className = 'feedback resultado-voto';
+        pResultado.id = `resultado-mais-provavel-${indice}`;
+        pResultado.style.ariaLive = 'polite';
+        pResultado.style.display = 'none';
+        divContainer.appendChild(pResultado);
+
+        // Ações (Ver porcentagens)
+        const divAcoes = document.createElement('div');
+        divAcoes.className = 'acoes-mais-provavel';
+        divAcoes.style.marginTop = '20px';
+        divAcoes.style.display = 'flex';
+        divAcoes.style.justifyContent = 'center';
+        
+        const botaoPorcentagem = document.createElement('button');
+        botaoPorcentagem.type = 'button';
+        botaoPorcentagem.className = 'quiz-btn';
+        botaoPorcentagem.style.textAlign = 'center';
+        botaoPorcentagem.textContent = 'Ver porcentagens';
+        botaoPorcentagem.addEventListener('click', () => mostrarResultadoMaisProvavel(indice));
+        divAcoes.appendChild(botaoPorcentagem);
+        
+        divContainer.appendChild(divAcoes);
+        container.appendChild(divContainer);
+
+        // Se o Supabase não estiver configurado
+        if (!clienteSupabase) {
+            desabilitarOpcoesMaisProvavel(indice, true);
+            mostrarStatusMaisProvavel(indice, 'A votação compartilhada será liberada assim que a configuração do Supabase for concluída.');
+        } else if (votoLocalRegistrado(indice)) {
+            desabilitarOpcoesMaisProvavel(indice, true);
+            mostrarResultadoMaisProvavel(indice);
         }
-    }
-    indicePerguntaMaisProvavel = novoIndice;
-
-    const pergunta = document.getElementById('pergunta-mais-provavel');
-    const opcoes = document.getElementById('opcoes-mais-provavel');
-    const resultado = document.getElementById('resultado-mais-provavel');
-
-    pergunta.textContent = perguntasMaisProvavel[indicePerguntaMaisProvavel];
-    opcoes.innerHTML = '';
-    participantesMaisProvavel.forEach(nome => {
-        const botao = document.createElement('button');
-        botao.type = 'button';
-        botao.className = 'quiz-btn quem-provavel-btn';
-        botao.textContent = nome;
-        botao.addEventListener('click', () => registrarVotoMaisProvavel(nome));
-        opcoes.appendChild(botao);
     });
-
-    resultado.textContent = '';
-    resultado.style.display = 'none';
-
-    if (!clienteSupabase) {
-        desabilitarOpcoesMaisProvavel(true);
-        mostrarStatusMaisProvavel('A votação compartilhada será liberada assim que a configuração do Supabase for concluída.');
-        return;
-    }
-
-    if (votoLocalRegistrado()) {
-        desabilitarOpcoesMaisProvavel(true);
-        await mostrarResultadoMaisProvavel();
-    }
 }
 
-async function registrarVotoMaisProvavel(nome) {
-    if (!clienteSupabase || votoLocalRegistrado()) return;
+async function registrarVotoMaisProvavel(indice, nome) {
+    if (!clienteSupabase || votoLocalRegistrado(indice)) return;
 
-    desabilitarOpcoesMaisProvavel(true);
-    mostrarStatusMaisProvavel('Registrando seu voto...');
+    desabilitarOpcoesMaisProvavel(indice, true);
+    mostrarStatusMaisProvavel(indice, 'Registrando seu voto...');
 
     const { error } = await clienteSupabase
         .from('votos_mais_provavel')
-        .insert({ pergunta_id: indicePerguntaMaisProvavel + 1, participante: nome });
+        .insert({ pergunta_id: indice + 1, participante: nome });
 
     if (error) {
         if (error.code === '23505') {
-            marcarVotoLocal();
-            mostrarStatusMaisProvavel('Seu voto nesta pergunta já foi registrado.');
-            await mostrarResultadoMaisProvavel();
+            marcarVotoLocal(indice);
+            mostrarStatusMaisProvavel(indice, 'Seu voto nesta pergunta já foi registrado.');
+            await mostrarResultadoMaisProvavel(indice);
             return;
         }
 
-        desabilitarOpcoesMaisProvavel(false);
-        mostrarStatusMaisProvavel('Não foi possível registrar seu voto. Tente novamente.');
+        desabilitarOpcoesMaisProvavel(indice, false);
+        mostrarStatusMaisProvavel(indice, 'Não foi possível registrar seu voto. Tente novamente.');
         return;
     }
 
-    marcarVotoLocal();
-    mostrarStatusMaisProvavel('Voto registrado! Veja abaixo como ficou a votação.');
-    await mostrarResultadoMaisProvavel();
+    marcarVotoLocal(indice);
+    mostrarStatusMaisProvavel(indice, 'Voto registrado! Veja abaixo como ficou a votação.');
+    await mostrarResultadoMaisProvavel(indice);
 }
 
-async function mostrarResultadoMaisProvavel() {
-    const resultado = document.getElementById('resultado-mais-provavel');
+async function mostrarResultadoMaisProvavel(indice) {
+    const resultado = document.getElementById(`resultado-mais-provavel-${indice}`);
     if (!clienteSupabase) {
-        mostrarStatusMaisProvavel('A votação compartilhada ainda não está configurada.');
+        mostrarStatusMaisProvavel(indice, 'A votação compartilhada ainda não está configurada.');
         return;
     }
 
     const { data, error } = await clienteSupabase.rpc('resultado_mais_provavel', {
-        p_pergunta_id: indicePerguntaMaisProvavel + 1
+        p_pergunta_id: indice + 1
     });
 
     if (error) {
-        mostrarStatusMaisProvavel('Não foi possível carregar o resultado agora.');
+        mostrarStatusMaisProvavel(indice, 'Não foi possível carregar o resultado agora.');
         return;
     }
 
     const totalVotos = data.reduce((total, item) => total + Number(item.total), 0);
 
     if (totalVotos === 0) {
-        mostrarStatusMaisProvavel('Ainda não há votos para mostrar as porcentagens.');
+        mostrarStatusMaisProvavel(indice, 'Ainda não há votos para mostrar as porcentagens.');
         return;
     }
 
-    const porcentagens = data.map((item, indice) => {
+    const porcentagens = data.map((item, idx) => {
         const votos = Number(item.total);
         const porcentagem = Math.round((votos / totalVotos) * 100);
-        return `${indice + 1}. ${item.participante} — ${porcentagem}% (${votos} ${votos === 1 ? 'voto' : 'votos'})`;
+        return `${idx + 1}. ${item.participante} — ${porcentagem}% (${votos} ${votos === 1 ? 'voto' : 'votos'})`;
     });
 
     resultado.textContent = `Resultado com ${totalVotos} ${totalVotos === 1 ? 'voto' : 'votos'}:\n${porcentagens.join('\n')}`;
     resultado.style.display = 'block';
 }
 
-function desabilitarOpcoesMaisProvavel(desabilitar) {
-    document.querySelectorAll('#opcoes-mais-provavel button').forEach(botao => botao.disabled = desabilitar);
+function desabilitarOpcoesMaisProvavel(indice, desabilitar) {
+    document.querySelectorAll(`#opcoes-mais-provavel-${indice} button`).forEach(botao => botao.disabled = desabilitar);
 }
 
-function chaveVotoMaisProvavel() {
-    return `mais-provavel-voto-${indicePerguntaMaisProvavel + 1}`;
+function chaveVotoMaisProvavel(indice) {
+    return `mais-provavel-voto-${indice + 1}`;
 }
 
-function votoLocalRegistrado() {
+function votoLocalRegistrado(indice) {
     try {
-        return localStorage.getItem(chaveVotoMaisProvavel()) === 'registrado';
+        return localStorage.getItem(chaveVotoMaisProvavel(indice)) === 'registrado';
     } catch {
         return false;
     }
 }
 
-function marcarVotoLocal() {
+function marcarVotoLocal(indice) {
     try {
-        localStorage.setItem(chaveVotoMaisProvavel(), 'registrado');
+        localStorage.setItem(chaveVotoMaisProvavel(indice), 'registrado');
     } catch {
         // O banco de dados ainda impede votos duplicados se o navegador bloquear o armazenamento local.
     }
 }
 
-function mostrarStatusMaisProvavel(mensagem) {
-    const resultado = document.getElementById('resultado-mais-provavel');
-    resultado.textContent = mensagem;
-    resultado.style.display = 'block';
+function mostrarStatusMaisProvavel(indice, mensagem) {
+    const resultado = document.getElementById(`resultado-mais-provavel-${indice}`);
+    if (resultado) {
+        resultado.textContent = mensagem;
+        resultado.style.display = 'block';
+    }
 }
 
 function responder(idPergunta, deucerto) {
@@ -987,6 +1019,38 @@ window.addEventListener('scroll', () => {
     }
     ultimaRolagem = rolagemAtual;
 });
+
+async function enviarFormularioAmigue(event) {
+    event.preventDefault();
+    const form = event.target;
+    const data = new FormData(form);
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const textoOriginal = submitBtn.textContent;
+    
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+
+    try {
+        const response = await fetch(form.action, {
+            method: form.method,
+            body: data,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        if (response.ok) {
+            alert('Aplicação enviada com sucesso! Nossa banca avaliará seu caráter em até 40 dias úteis.');
+            form.reset();
+        } else {
+            alert('Ocorreu um erro ao enviar. Tente novamente mais tarde.');
+        }
+    } catch (error) {
+        alert('Erro de conexão. Verifique sua internet.');
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = textoOriginal;
+    }
+}
     </script>
 </section>
     <!-- UMA PEOPLE QUE É BEAUTY -->
@@ -1012,12 +1076,12 @@ window.addEventListener('scroll', () => {
                Mande seu nome e o sabor de pizza que você escolhe sábado a noite que avaliaremos sua resposta!
             </p>
             
-            <form style="display: flex; flex-direction: column; gap: 15px; text-align: left;" onsubmit="alert('Aplicação enviada com sucesso! Nossa banca avaliará seu caráter em até 40 dias úteis.'); return false;">
+            <form id="form-amigue" action="https://formsubmit.co/ajax/fenililopes@gmail.com" method="POST" onsubmit="enviarFormularioAmigue(event)" style="display: flex; flex-direction: column; gap: 15px; text-align: left;">
                 <label style="font-weight: bold; color: var(--vermelho-principal);">Seu Nome:</label>
-                <input type="text" required style="padding: 10px; font-family: 'Gochi Hand', cursive; font-size: 1.2rem; border: 2px solid var(--marrom-escuro); background: var(--fundo-pagina);">
+                <input type="text" name="Nome" required style="padding: 10px; font-family: 'Gochi Hand', cursive; font-size: 1.2rem; border: 2px solid var(--marrom-escuro); background: var(--fundo-pagina);">
                 
                 <label style="font-weight: bold; color: var(--vermelho-principal);">Por que devemos te aceitar?</label>
-                <textarea rows="4" required style="padding: 10px; font-family: 'Gochi Hand', cursive; font-size: 1.2rem; border: 2px solid var(--marrom-escuro); background: var(--fundo-pagina); resize: none;"></textarea>
+                <textarea name="Motivo" rows="4" required style="padding: 10px; font-family: 'Gochi Hand', cursive; font-size: 1.2rem; border: 2px solid var(--marrom-escuro); background: var(--fundo-pagina); resize: none;"></textarea>
                 
                 <button type="submit" class="quiz-btn" style="text-align: center; margin-top: 10px; font-weight: bold; background-color: var(--vermelho-principal); color: white;">
                     Enviar resposta para avaliação.
