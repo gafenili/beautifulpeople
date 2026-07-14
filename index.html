@@ -427,6 +427,83 @@
                 display: none;
             }
         }
+    /* ==========================================
+   REGRAS PARA CELULAR (Telas até 768px)
+   ========================================== */
+@media (max-width: 768px) {
+  body {
+    font-size: 1.1rem; /* Reduz ligeiramente o tamanho geral da fonte no celular */
+  }
+
+  /* Transforma o título em uma "faixa" clicável */
+  .aba-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    background-color: var(--creme-fosco);
+    border: 2px dashed var(--vermelho-principal);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.4rem;
+    color: var(--vermelho-principal);
+    user-select: none;
+    transition: background-color 0.2s ease;
+  }
+
+  /* Efeito visual rápido ao tocar na faixa */
+  .aba-header:active {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  /* Esconde o conteúdo por padrão no celular */
+  .aba-content {
+    display: none;
+    padding: 10px 5px 20px 5px;
+  }
+
+  /* Quando a classe "active" estiver no contêiner, mostra o conteúdo e gira a seta */
+  .aba-item.active .aba-content {
+    display: block;
+  }
+
+  .aba-item.active .setinha {
+    transform: rotate(90deg);
+  }
+
+  .setinha {
+    display: inline-block;
+    transition: transform 0.2s ease;
+  }
+}
+
+/* ==========================================
+   REGRAS PARA COMPUTADOR (Telas acima de 768px)
+   ========================================== */
+@media (min-width: 769px) {
+  /* No computador, não precisamos das faixas internas, pois já usamos o menu do topo */
+  .aba-header {
+    display: none;
+  }
+
+  /* Esconde todas as abas por padrão */
+  .aba-item {
+    display: none;
+  }
+
+  /* Mostra apenas a aba que tiver a classe "active" */
+  .aba-item.active {
+    display: block;
+    animation: fadeEffect 0.3s ease-in-out;
+  }
+}
+
+/* Transição suave ao trocar de aba no computador */
+@keyframes fadeEffect {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
     </style>
 </head>
 <body>
@@ -1125,6 +1202,42 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+    // =================================================================
+// CONTROLE DE ABAS (INICIALIZAÇÃO E MENUS)
+// =================================================================
+document.addEventListener("DOMContentLoaded", () => {
+  // Seleciona todas as seções principais do seu site
+  const secoes = document.querySelectorAll("main section, section"); 
+  // Seleciona os links de navegação do menu superior
+  const linksMenu = document.querySelectorAll("header nav a"); 
+
+  // 1. AO ABRIR O SITE: Fecha todas as seções, exceto a primeira (Quem Somos)
+  secoes.forEach((secao, index) => {
+    if (index === 0) {
+      toggleSection(secao.id, 'open'); // Mantém a primeira aberta
+    } else {
+      toggleSection(secao.id, 'close'); // Fecha todas as outras
+    }
+  });
+
+  // 2. NO COMPUTADOR: Mudar de aba apenas clicando no menu do topo
+  linksMenu.forEach(link => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault(); // Impede a página de rolar para baixo automaticamente
+      
+      const targetId = link.getAttribute("href").replace("#", "");
+      
+      // Fecha todas as abas e abre somente a que foi clicada no menu
+      secoes.forEach(secao => {
+        if (secao.id === targetId) {
+          toggleSection(secao.id, 'open');
+        } else {
+          toggleSection(secao.id, 'close');
+        }
+      });
+    });
+  });
+});
     </script>
     </div>
 </section>
@@ -1169,8 +1282,8 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
     </section>
 
-    <footer>
-        <p>Beautiful People — 2026</p>
-    </footer>
+   <footer>
+     <p>© 2026 Meu Site. Versão: <strong>VERSAO_PROJETO</strong></p>
+  </footer>
 </body>
 </html>
