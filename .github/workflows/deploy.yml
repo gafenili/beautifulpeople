@@ -1,0 +1,43 @@
+name: Deploy com Versão Automática
+
+on:
+  push:
+    branches: ["main"] # Altere para "master" se sua branch principal tiver esse nome
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Injetar Versão no HTML
+        run: |
+          # Obtém a hash curta do commit atual
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          # Substitui a palavra-chave pela hash no arquivo index.html
+          sed -i "s/VERSAO_PROJETO/$SHORT_SHA/g" index.html
+
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload dos arquivos do site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy para o GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
